@@ -2,6 +2,7 @@
 A simple and efficient way to track your daily expenses!
 
 🚀 Project Overview
+
 The Expense Tracker is a Java-based console application designed to help users manage their daily expenses. With features like adding, updating, sorting, and deleting expenses, this application allows users to track their spending in various categories and view summaries of their financial activities.
 
 The tracker is built with simplicity in mind, giving users full control over how they manage their expenses and providing an easy-to-navigate interface.
