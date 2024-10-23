@@ -76,19 +76,19 @@ public class MAIN {
     // Addition Feature -----------------------
     static void view_monthly_expense(int total_expense, String Month) {
         int year = Year.now().getValue();
-        try {
-
+        boolean b = false;
             for (int i = 0; i < total_expense; i++) {
                 String[] str = arr.get(i).dat.split("-");
                 if (str[1].trim().equalsIgnoreCase(Month) == true && Integer.parseInt(str[2].trim()) == year) {
                     System.out.println("-----------------------------\n");
                     arr.get(i).getvalue();
                     System.out.println("-----------------------------\n");
+                    b = true;
                 }
             }
-        } catch (Exception e) {
-            System.out.println("i function");
-        }
+            if(b == false){
+                System.out.println("Month Not Found!");
+            }
 
     }
 
@@ -97,16 +97,22 @@ public class MAIN {
     // ---------------
     static void catagory_wide_expenseive(int total_expense, String str) {
         int p = 0;
+        int total = 0;
         for (int i = 0; i < total_expense; i++) {
             if (arr.get(i).Catagory.equalsIgnoreCase(str) == true) {
                 System.out.println("------------------\n");
                 arr.get(i).getvalue();
+                total += arr.get(i).ammount;
                 System.out.println("------------------\n");
                 p = 1;
             }
+            
         }
         if (p == 0) {
             System.out.println("No Expensive Found !");
+        }
+        else{
+            System.out.println("Total :- "+total);
         }
     }
 
@@ -154,14 +160,13 @@ public class MAIN {
 
                 boolean b = arr.get(total_expense).setvalue(Math.toIntExact(proid)); // call The Function with id =
                                                                                      // proid
-                if (b == false) {
+                if (b == false && arr.size() > 0) {
                     arr.remove(total_expense);// if error accure they delete the error record
                     total_expense -= 1;
                 }
-                arr.get(total_expense);
                 total_expense += 1; // after seccesful insert value index incerse to + 1
 
-            } else if (input == 2) {
+            } else if (input == 2 && arr.size() > 0) {
                 try {
 
                     for (int i = 0; i <= total_expense; i++) {
@@ -178,22 +183,25 @@ public class MAIN {
                     }
                 } catch (Exception e) {
                 }
-            } else if (input == 3) {
+            } else if (input == 3 && arr.size() > 0) {
                 // Delete The data
                 System.out.println("Enter Expense Id For Delete:- ");
-                int i = sc.nextInt();
-                boolean com = false;
+                int id = 0;
+                try {
+                    id = Integer.parseInt(sc.next());
+                    
+                } catch (Exception e) {
+                    System.out.println("\"Expense not found\" if the ID isn't valid");
+                }
+                boolean com = true;
                 for (int j = 0; j < total_expense; j++) {
-
-                    if (i == arr.get(j).id) {
+                    if (id == arr.get(j).id) {
                         arr.remove(j);
                         System.out.println("\nExpense Deleted Success !\n");
 
                         total_expense -= 1;// decerese array list index by 1
                         com = false;
                         break;
-                    } else {
-                        com = true;
                     }
 
                 }
@@ -201,7 +209,7 @@ public class MAIN {
                     System.out.println("\"Expense not found\" if the ID isn't valid");
 
                 }
-            } else if (input == 4) {
+            } else if (input == 4 && arr.size() > 0) {
                 int op = 0;
                 System.out.println("Enter Your Commands:- ");
                 System.out.println("1. Total Catagory Expense || 2. Only Spacific Catagory Expense");
@@ -216,7 +224,7 @@ public class MAIN {
                     catagory_wide_expenseive(total_expense, str);
                 }
 
-            } else if (input == 5) {
+            } else if (input == 5 && arr.size() > 0) {
                 // store array List data into file with ! mark with append mode
                 try {
                     FileWriter file_Writer = new FileWriter("Expense_back.txt");
@@ -241,18 +249,18 @@ public class MAIN {
                 } finally {
                     loop = 0;
                 }
-            } else if (input == 6) {
+            } else if (input == 6 ) {
                 System.out.println("Enter Commands :- ");
                 System.out.println("1. View Month Expense || 2.Update Expenses");
                 System.out.println("3. Sort Expense       || ");
                 int i = sc.nextInt();
-                if (i == 1) {
+                if (i == 1 && arr.size() > 0) {
                     sc.nextLine();
                     System.out.println("Enter Month: ");
                     String month = new String();
                     month = sc.nextLine();
                     view_monthly_expense(total_expense, month);
-                } else if (i == 2) {
+                } else if (i == 2 && arr.size() > 0) {
                     System.out.println("Enter Expense Id");
                     int num = sc.nextInt();
                     boolean b = false;
@@ -267,15 +275,18 @@ public class MAIN {
                     if (b == false) {
                         System.out.println("Expense Update Not Succesfull !\nPlease TRY Again");
                     }
-                } else if (i == 3) {
+                } else if (i == 3 && arr.size() > 0) {
 
                     sortwise(total_expense);
 
                 }
+                else {
+                    System.out.println("Wrong Input OR Expense List Are Empty");
+                }
             }
 
             else {
-                System.out.println("Wrong Input");
+                System.out.println("Wrong Input OR Expense List Are Empty");
             }
         }
 
